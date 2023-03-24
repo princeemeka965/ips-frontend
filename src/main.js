@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 
 import './assets/main.css'
+import './assets/devices.css'
 
 const app = createApp(App)
 
