@@ -182,9 +182,9 @@ export default {
 </script>
 
 <template>
-  <div class="lg:flex flex-grow lg:w-1/2 w-full justify-start lg:py-10 lg:pl-10 py-1">
-    <div class="w-3/4">
-      <div class="phoneContainer absolute rounded-md lg:-mt-16 md:-mt-16 mt-5">
+  <div class="flex-grow lg:w-1/2 w-full lg:justify-start justify-center flex lg:py-10 lg:pl-10 py-1">
+    <div class="lg:w-3/4 lg:justify-start w-full flex justify-center">
+      <div class="phoneContainer absolute rounded-md lg:-mt-16 mt-5">
         <div
           class="lg:rounded-full lg:flex hidden"
           :style="`box-shadow: -10px -17px 0px 18px rgba(${red}, ${green}, ${blue}, 1); 
@@ -193,8 +193,8 @@ export default {
 
         <div
           class="rounded-full flex lg:hidden"
-          :style="`box-shadow: -10px -17px 0px 18px rgba(${red}, ${green}, ${blue}, 1); 
-          height : 300px; width : 350px; filter: blur(50px)`"
+          :style="`box-shadow: -10px -10px 0px 10px rgba(${red}, ${green}, ${blue}, 1); 
+          height : 300px; width : 318px; filter: blur(50px)`"
         />
 
         <div class="p-1 absolute" style="top: 14.5%">
@@ -253,8 +253,8 @@ export default {
 
         <!-- Circle Home Button for smaller screens, when clicked, moves to next image on slide --->
         <div
-          class="w-12 mx-6 h-12 rounded-full cursor-pointer lg:hidden"
-          style="left: 33.5%; top: 83.6%"
+          class="w-12 mx-6 h-12 rounded-full cursor-pointer lg:hidden border"
+          style="left: 33.5%; top: 34%"
           @click="moveNextCarousel()"
         ></div>
 
@@ -271,7 +271,7 @@ export default {
         </div>
 
         <!--- Carousel Progress Bar for smaller screens --->
-        <div class="w-4/5 mx-8 h-10 mb-20 flex lg:hidden" style="top : 65%">
+        <div class="w-4/5 mx-8 h-10 mb-20 flex lg:hidden" style="top : 50%">
           <div
             v-for="(imgBorder, index) in imageLength"
             :key="index"
