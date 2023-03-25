@@ -18,6 +18,8 @@ export default {
       blue: '49',
       current: 1, // starts with the first image
       thumbnailCurrent: 2, // this shows next image on slide
+      progressIndex: 0, // this sets the first progress bar
+      barWidth: 0, // sets initial width of progress bar
       fadeOut: false,
       timer: null
     }
@@ -86,16 +88,40 @@ export default {
       this.blue = rgb.b
     },
 
-    stopAutoCarousel() {
-      // clear setInterval created on Mounted
-      clearInterval(this.timer)
-    },
-
     startAutoCarousel() {
       // start setInterval to active auto slider
-      this.timer = setInterval(() => {
-        this.slideCarousel()
-      }, 5000)
+      /**
+       * First we increase the width of the progress bar starting with the first.
+       * Once it's 100%, we activate the slideCarousel function to move to next image
+       * Once all the width of each progress bar is 100%, we do a reset to continue from start
+       * Note that the number of progress bar is equivalent to number of images available on the slide
+       */
+      setInterval(() => {
+        if (this.progressIndex < this.imageLength) {
+          // If we haven't set the width of all progress bar to 100%
+          this.barWidth += 20
+          this.$refs.progressBar[this.progressIndex].style.width = `${this.barWidth}%`
+          this.$refs.mobileProgressBar[this.progressIndex].style.width = `${this.barWidth}%`
+
+          if (this.$refs.progressBar[this.progressIndex].style.width === '100%' && this.$refs.mobileProgressBar[this.progressIndex].style.width === '100%') {
+            // Move to the next progress bar if the width in the previous one has been filled to 100%
+            this.progressIndex++
+            this.barWidth = 0
+
+            // Activate slideCarousel to move to next image
+            this.slideCarousel()
+          }
+        } else {
+          // If all the progree bar have width set to 100%
+          // reset the progress bar target to be the first progress bar
+          this.progressIndex = 0
+          // reset the width of all the filled progress bar back to 0%
+          for (var i = 0; i < this.imageLength; i++) {
+            this.$refs.progressBar[i].style.width = '0%';
+            this.$refs.mobileProgressBar[i].style.width = '0%'
+          }
+        }
+      }, 1000)
     },
 
     slideCarousel() {
@@ -111,13 +137,13 @@ export default {
       // For the preview Image looping
       if (this.current < this.imageLength) {
         setTimeout(() => {
-          this.current++;
+          this.current++
           this.fadeOut = false
           this.loadedImg()
         }, 1000)
       } else {
         setTimeout(() => {
-          this.current = 1;
+          this.current = 1
           this.fadeOut = false
           this.loadedImg()
         }, 1000)
@@ -126,16 +152,23 @@ export default {
       // For the thumbnail looping, this is for displaying next image to be previewed
       if (this.thumbnailCurrent < this.imageLength) {
         setTimeout(() => {
-          this.thumbnailCurrent++;
+          this.thumbnailCurrent++
           this.fadeOut = false
         }, 1000)
       } else {
         setTimeout(() => {
-          this.thumbnailCurrent = 1;
+          this.thumbnailCurrent = 1
           this.fadeOut = false
         }, 1000)
       }
+    },
 
+    moveNextCarousel() {
+      this.$refs.progressBar[this.progressIndex].style.width = `100%`;
+      this.$refs.mobileProgressBar[this.progressIndex].style.width = '100%'
+      this.progressIndex++
+      this.barWidth = 0
+      this.slideCarousel()
     }
   },
 
@@ -143,51 +176,112 @@ export default {
     /**
      * onMounted, activate automotaic carousel
      */
-     this.startAutoCarousel()
+    this.startAutoCarousel()
   }
 }
 </script>
 
 <template>
-  <div class="lg:flex flex-grow h-full lg:w-1/2 w-full justify-start lg:py-10 lg:pl-10 hidden">
+  <div class="lg:flex flex-grow lg:w-1/2 w-full justify-start lg:py-10 lg:pl-10 py-1">
     <div class="w-3/4">
-      <div class="phoneContainer absolute rounded-md -mt-16">
+      <div class="phoneContainer absolute rounded-md lg:-mt-16 md:-mt-16 mt-5">
         <div
-          class="rounded-full"
-          :style="`box-shadow: -10px -17px 0px 12px rgba(${red}, ${green}, ${blue}, 1); 
+          class="lg:rounded-full lg:flex hidden"
+          :style="`box-shadow: -10px -17px 0px 18px rgba(${red}, ${green}, ${blue}, 1); 
           height : 500px; width : 350px; filter: blur(50px)`"
         />
+
         <div
-          class="p-1 absolute fade-in-image"
-          :class="fadeOut ? 'fade-out-image' : 'fade-in-image'"
-          style="top: 14.5%"
-        >
+          class="rounded-full flex lg:hidden"
+          :style="`box-shadow: -10px -17px 0px 18px rgba(${red}, ${green}, ${blue}, 1); 
+          height : 300px; width : 350px; filter: blur(50px)`"
+        />
+
+        <div class="p-1 absolute" style="top: 14.5%">
+          <div :class="fadeOut ? 'fade-out-image' : 'fade-in-image'">
+            <!-- displays large screen image -->
+            <img
+              class="device-content p-2"
+              style="width: 100%"
+              :srcset="slideImage(current).subset"
+              :src="slideImage(current).value"
+              ref="imgScreen"
+              @load="loadedImg"
+            />
+          </div>
+          <!-- displays the resolution banner -->
           <img
-            class="device-content p-2"
-            style="width: 100%"
-            :srcset="slideImage(current).subset"
-            :src="slideImage(current).value"
-            ref="imgScreen"
-            @load="loadedImg"
+            class="absolute p-2"
+            style="width: 50%; top: 80%; left: 24%"
+            src="../assets/icons/screen-resolution.svg"
           />
         </div>
-        <div class="lg:w-9 lg:mt-4 lg:mx-6 lg:h-10 absolute"
-        :class="fadeOut ? 'thumb-fade-out-image' : 'thumb-fade-in-image'"
+        <!--- Thumbnail for Large Screens --->
+        <div
+          class="lg:w-9 lg:mt-4 lg:mx-6 lg:h-10 lg:absolute lg:block hidden"
+          :class="fadeOut ? 'thumb-fade-out-image' : 'thumb-fade-in-image'"
         >
           <img
             style="height: 100%; width: 100%"
-            :srcset="slideThumbnailImage(current).subset"
+            class="rounded-sm"
+            :srcset="slideThumbnailImage(thumbnailCurrent).subset"
             :src="slideThumbnailImage(thumbnailCurrent).value"
             id="thumbnail"
           />
         </div>
+
+        <!--- Thumbnail for Small Screens --->
         <div
-          class="lg:w-12 lg:my-3 lg:mx-6 lg:h-12 border rounded-full cursor-pointer"
+          class="w-9 mx-6 h-9 absolute lg:hidden" style="top: 83.6%"
+          :class="fadeOut ? 'thumb-fade-out-image' : 'thumb-fade-in-image'"
+        >
+          <img
+            style="height: 100%; width: 100%"
+            class="rounded-sm"
+            :srcset="slideThumbnailImage(thumbnailCurrent).subset"
+            :src="slideThumbnailImage(thumbnailCurrent).value"
+            id="thumbnail"
+          />
+        </div>
+
+        <!-- Circle Home Button for larger screens, when clicked, moves to next image on slide --->
+        <div
+          class="lg:w-12 lg:my-3 lg:mx-6 lg:h-12 border rounded-full cursor-pointer lg:block hidden"
           style="left: 33.5%"
-          @click="slideCarousel()"
-          @mouseenter="stopAutoCarousel()"
-          @mouseleave="startAutoCarousel()"
+          @click="moveNextCarousel()"
         ></div>
+
+        <!-- Circle Home Button for smaller screens, when clicked, moves to next image on slide --->
+        <div
+          class="w-12 mx-6 h-12 rounded-full cursor-pointer lg:hidden"
+          style="left: 33.5%; top: 83.6%"
+          @click="moveNextCarousel()"
+        ></div>
+
+        <!--- Carousel Progress Bar --->
+        <div class="lg:w-4/5 lg:mx-8 lg:mt-20 lg:-mb-20 lg:flex hidden">
+          <div
+            v-for="(imgBorder, index) in imageLength"
+            :key="index"
+            class="flex flex-grow mx-2 w-full"
+            style="border-radius: 3px; height: 2px; background-color: #3a3a3a"
+          >
+            <div class="bg-grey-white" :ref="`progressBar`" style="border-radius: 3px" />
+          </div>
+        </div>
+
+        <!--- Carousel Progress Bar for smaller screens --->
+        <div class="w-4/5 mx-8 h-10 mb-20 flex lg:hidden" style="top : 65%">
+          <div
+            v-for="(imgBorder, index) in imageLength"
+            :key="index"
+            class="flex flex-grow mx-2 w-full"
+            style="border-radius: 3px; height: 2px; background-color: #3a3a3a"
+          >
+            <div class="bg-grey-white" :ref="`mobileProgressBar`" style="border-radius: 3px" />
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -243,6 +337,9 @@ export default {
   -ms-animation: fadeOut 1s;
 }
 
+.bg-grey-white {
+  background-color: #eeecec;
+}
 
 @keyframes fadeIn {
   0% {

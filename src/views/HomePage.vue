@@ -4,7 +4,7 @@ import PhoneTemplate from '../components/PhoneTemplate.vue'
 </script>
 
 <template>
-  <div class="w-full h-full flex flex-col lg:py-10 lg:pl-32 sm:py-10 sm:px-20 py-10 px-5">
+  <div class="w-full h-screen flex flex-col lg:py-10 lg:pl-32 sm:py-10 sm:px-20 py-10 px-5">
     <!--- Set Logo as Header -->
     <div class="lg:flex md:flex sm:flex hidden">
       <img src="../assets/icons/ips-logo.svg" />
@@ -12,10 +12,11 @@ import PhoneTemplate from '../components/PhoneTemplate.vue'
     <!--- Set Section of Web Page --->
     <div
       class="w-full flex flex-col lg:flex lg:flex-row md:flex md:flex-row lg:my-16 sm:my-20 my-5"
+      style="min-height : 85vh"
     >
       <!-- First Segment of Section featuring Email Input for notification ---->
-      <div class="flex lg:w-1/2 flex-grow w-full justify-start lg:py-20">
-        <div class="flex flex-col flex-grow lg:my-10">
+      <div class="flex lg:w-1/2 lg:flex-grow md:flex-grow w-full justify-start lg:py-20">
+        <div class="flex flex-col lg:flex-grow lg:my-10">
           <div class="w-4/5">
             <badge-component title="New Course" />
             <div class="lg:py-3 sm:py-4 pt-5 pb-3">
