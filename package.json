@@ -12,7 +12,8 @@
   "dependencies": {
     "@fontsource/montserrat": "^4.5.14",
     "vue": "^3.2.47",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue3-lazyload": "^0.3.6"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
