@@ -3,8 +3,8 @@ export default function carousel() {
         {
             id: 1,
             subset:
-                '/assets/carousel-photo-01@2x.jpg 2x /assets/carousel-photo-01@3x.jpg 3x',
-            value: '/assets/carousel-photo-01.jpg',
+                '/images/carousel-photo-01@2x.jpg 2x /images/carousel-photo-01@3x.jpg 3x',
+            value: '/images/carousel-photo-01.jpg',
             thumbnailSet: '../src/assets/icons/small-carousel-photo-01@2x.jpg 2x ../src/assets/icons/small-carousel-photo-01@3x.jpg 3x',
             thumbnail: '../src/assets/icons/small-carousel-photo-01.jpg',
         },
