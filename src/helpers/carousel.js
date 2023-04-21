@@ -5,32 +5,32 @@ export default function carousel() {
             subset:
                 '/images/carousel-photo-01@2x.jpg 2x /images/carousel-photo-01@3x.jpg 3x',
             value: '/images/carousel-photo-01.jpg',
-            thumbnailSet: '../src/assets/icons/small-carousel-photo-01@2x.jpg 2x ../src/assets/icons/small-carousel-photo-01@3x.jpg 3x',
-            thumbnail: '../src/assets/icons/small-carousel-photo-01.jpg',
+            thumbnailSet: '/images/small-carousel-photo-01@2x.jpg 2x /images/small-carousel-photo-01@3x.jpg 3x',
+            thumbnail: '/images/small-carousel-photo-01.jpg',
         },
         {
             id: 2,
             subset:
-                '../src/assets/icons/carousel-photo-02@2x.jpg 2x ../src/assets/icons/carousel-photo-02@3x.jpg 3x',
-            value: '../src/assets/icons/carousel-photo-02.jpg',
-            thumbnailSet: '../src/assets/icons/small-carousel-photo-02@2x.jpg 2x ../src/assets/icons/small-carousel-photo-02@3x.jpg 3x',
-            thumbnail: '../src/assets/icons/small-carousel-photo-02.jpg',
+                '/images/carousel-photo-02@2x.jpg 2x /images/carousel-photo-02@3x.jpg 3x',
+            value: '/images/carousel-photo-02.jpg',
+            thumbnailSet: '/images/small-carousel-photo-02@2x.jpg 2x /images/small-carousel-photo-02@3x.jpg 3x',
+            thumbnail: '/images/small-carousel-photo-02.jpg',
         },
         {
             id: 3,
             subset:
-                '../src/assets/icons/carousel-photo-03@2x.jpg 2x ../src/assets/icons/carousel-photo-03@3x.jpg 3x',
-            value: '../src/assets/icons/carousel-photo-03.jpg',
-            thumbnailSet: '../src/assets/icons/small-carousel-photo-03@2x.jpg 2x ../src/assets/icons/small-carousel-photo-03@3x.jpg 3x',
-            thumbnail: '../src/assets/icons/small-carousel-photo-03.jpg',
+                '/images/carousel-photo-03@2x.jpg 2x /images/carousel-photo-03@3x.jpg 3x',
+            value: '/images/carousel-photo-03.jpg',
+            thumbnailSet: '/images/small-carousel-photo-03@2x.jpg 2x /images/small-carousel-photo-03@3x.jpg 3x',
+            thumbnail: '/images/small-carousel-photo-03.jpg',
         },
         {
             id: 4,
             subset:
-                '../src/assets/icons/carousel-photo-04@2x.jpg 2x ../src/assets/icons/carousel-photo-04@3x.jpg 3x',
-            value: '../src/assets/icons/carousel-photo-04.jpg',
-            thumbnailSet: '../src/assets/icons/small-carousel-photo-04@2x.jpg 2x ../src/assets/icons/small-carousel-photo-04@3x.jpg 3x',
-            thumbnail: '../src/assets/icons/small-carousel-photo-04.jpg',
+                '/images/carousel-photo-04@2x.jpg 2x /images/carousel-photo-04@3x.jpg 3x',
+            value: '/images/carousel-photo-04.jpg',
+            thumbnailSet: '/images/small-carousel-photo-04@2x.jpg 2x /images/small-carousel-photo-04@3x.jpg 3x',
+            thumbnail: '/images/small-carousel-photo-04.jpg',
         },
     ];
     // NB: You can push more objects into the (imgArray) array
